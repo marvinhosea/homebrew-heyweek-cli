@@ -8,7 +8,7 @@
 
 version: 2
 
-project_name: hw
+project_name: Heyweek
 env:
   - AUTH_URL= {{ .Env.AUTH_URL }}
   - GO111MODULE=on
@@ -62,8 +62,7 @@ archives:
       - LICENSE
       #- ./share/man/man1/hw*.1
     name_template: >-
-      {{ .ProjectName }}_
-      {{- title .Os }}_
+      {{ .ProjectName }}_{{ .Version }}_linux_
       {{- if eq .Arch "amd64" }}x86_64
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
@@ -76,13 +75,7 @@ archives:
     files:
       - LICENSE
       #- ./share/man/man1/hw*.1
-    name_template: >-
-      {{ .ProjectName }}_
-      {{- title .Os }}_
-      {{- if eq .Arch "amd64" }}x86_64
-      {{- else if eq .Arch "386" }}i386
-      {{- else }}{{ .Arch }}{{ end }}
-      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    name_template: "{{ .ProjectName }}_{{ .Version }}_macOS_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
   - id: windows-archive
     builds:
       - windows
@@ -91,8 +84,7 @@ archives:
     files:
       - LICENSE
     name_template: >-
-      {{ .ProjectName }}_
-      {{- title .Os }}_
+      {{ .ProjectName }}_{{ .Version }}_windows_
       {{- if eq .Arch "amd64" }}x86_64
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
