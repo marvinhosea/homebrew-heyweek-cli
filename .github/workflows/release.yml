@@ -11,6 +11,8 @@ permissions:
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
+    env:
+      AUTH_URL: $AUTH_URL
     steps:
       - name: Checkout
         uses: actions/checkout@v4
