@@ -15,6 +15,9 @@ func Execute() {
 		CompletionOptions: cobra.CompletionOptions{
 			DisableDefaultCmd: true,
 		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return cmd.Help()
+		},
 	}
 
 	rootCmd.SetHelpTemplate(rootCmd.HelpTemplate() + "help tmpl")
@@ -22,7 +25,7 @@ func Execute() {
 
 	err := rootCmd.Execute()
 	if err != nil {
-		fmt.Println(fmt.Errorf("error %w", err))
+		fmt.Fprintf(os.Stderr, "error running main command %v", err)
 		os.Exit(1)
 	}
 }

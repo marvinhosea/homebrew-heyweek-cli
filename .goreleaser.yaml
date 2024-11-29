@@ -11,6 +11,7 @@ version: 2
 project_name: heyweek-cli
 env:
   - AUTH_URL= {{ .Env.AUTH_URL }}
+  - GO111MODULE=on
 before:
   hooks:
     # You may remove this if you don't use go modules.
@@ -45,7 +46,7 @@ archives:
     format_overrides:
       - goos: windows
         format: zip
-
+report_sizes: true
 changelog:
   sort: asc
   filters:
