@@ -1,0 +1,7 @@
+linters-settings:
+  errcheck:
+    exclude-functions:
+      - syscall.Syscall
+run:
+  build-tags:
+    - testing
