@@ -8,32 +8,59 @@
 
 version: 2
 
-project_name: heyweek-cli
+project_name: hw
 env:
   - AUTH_URL= {{ .Env.AUTH_URL }}
   - GO111MODULE=on
+
+release:
+  # If set to auto, will mark the release as not ready for production
+  # in case there is an indicator for this in the tag e.g. v1.0.0-rc1
+  # If set to true, will mark the release as not ready for production.
+  # Default: false.
+  prerelease: auto
+  name_template: "Heyweek CLI {{ .Version }}"
+
 before:
   hooks:
     # You may remove this if you don't use go modules.
     - go mod tidy
     # you may remove this if you don't need go generate
     - go generate ./...
+
 checksum:
   name_template: "checksums.txt"
+
 builds:
-  - env:
-      - CGO_ENABLED=0
-    binary: heyweek
+  - id: macos
     goos:
-      - linux
-      - windows
       - darwin
     goarch:
       - amd64
       - arm64
+    binary: bin/hw
+  - id: linux
+    goos:
+      - linux
+    goarch: ["386", "amd64", "arm64"]
+    env:
+      - CGO_ENABLED=0
+    binary: bin/hw
+  - id: windows
+    goos:
+      - windows
+    goarch: ["386", "amd64", "arm64"]
+    binary: bin/hw
+
 archives:
-  - format: tar.gz
-    # this name template makes the OS and Arch compatible with the results of `uname`.
+  - id: linux-archive
+    builds:
+      - linux
+    wrap_in_directory: true
+    format: tar.gz
+    files:
+      - LICENSE
+      #- ./share/man/man1/hw*.1
     name_template: >-
       {{ .ProjectName }}_
       {{- title .Os }}_
@@ -41,14 +68,73 @@ archives:
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
       {{- if .Arm }}v{{ .Arm }}{{ end }}
-    # use zip for windows archives
-    format_overrides:
-      - goos: windows
-        format: zip
+  - id: macos-archive
+    builds:
+      - macos
+    wrap_in_directory: true
+    format: zip
+    files:
+      - LICENSE
+      #- ./share/man/man1/hw*.1
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+  - id: windows-archive
+    builds:
+      - windows
+    wrap_in_directory: true
+    format: zip
+    files:
+      - LICENSE
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+
 report_sizes: true
+
+nfpms:
+  - license: Heyweek
+    maintainer: Heyweek
+    homepage: https://www.heyweek.com/downloads/cli
+    bindir: /usr
+    description: Heyweek command line tool
+    vendor: Heyweek
+    formats:
+      - deb
+      - rpm
+
 changelog:
   sort: asc
   filters:
     exclude:
       - "^docs:"
       - "^test:"
+      - "^chore:"
+      - Merge branch
+      - go mod tidy
+      - Merge pull request
+      - Merge remote-tracking branch
+      - "merge conflict"
+  groups:
+    - title: Dependency updates
+      regexp: '^.*?(feat|fix)\(deps\)!?:.+$'
+      order: 300
+    - title: "New Features"
+      regexp: '^.*?feat(\([[:word:]]+\))??!?:.+$'
+      order: 100
+    - title: "Bug fixes"
+      regexp: '^.*?fix(\([[:word:]]+\))??!?:.+$'
+      order: 200
+    - title: "Documentation updates"
+      regexp: ^.*?doc(\([[:word:]]+\))??!?:.+$
+      order: 400
+    - title: Other work
+      order: 9999
