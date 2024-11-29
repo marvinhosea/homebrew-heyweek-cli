@@ -1,7 +1,8 @@
-linters-settings:
-  errcheck:
-    exclude-functions:
-      - syscall.Syscall
-run:
-  build-tags:
-    - testing
+linters:
+  enable:
+    - gofmt
+    - nolintlint
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
