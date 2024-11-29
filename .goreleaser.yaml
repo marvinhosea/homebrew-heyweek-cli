@@ -10,7 +10,7 @@ version: 2
 
 project_name: heyweek-cli
 env:
-  - AUTH_URL= {{ .Env.AUTH_URL }}
+  - AUTH_URL= {{ $AUTH_URL }}
   - GO111MODULE=on
 before:
   hooks:
