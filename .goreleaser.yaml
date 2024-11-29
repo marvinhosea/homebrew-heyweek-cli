@@ -18,7 +18,8 @@ before:
     - go mod tidy
     # you may remove this if you don't need go generate
     - go generate ./...
-
+checksum:
+  name_template: "checksums.txt"
 builds:
   - env:
       - CGO_ENABLED=0
