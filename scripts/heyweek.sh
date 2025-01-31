@@ -18,7 +18,7 @@ removePrevInstallation() {
   fi
 }
 
-version$(curl --silent "https://api.github.com/repos/marvinhosea/heyweek-cli/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+version=$(curl --silent "https://api.github.com/repos/marvinhosea/heyweek-cli/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
 releasesApiUrl=https://github.com/marvinhosea/heyweek-cli/releases/download
 
 installationProcess() {
