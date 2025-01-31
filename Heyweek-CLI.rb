@@ -5,20 +5,20 @@
 class HeyweekCli < Formula
   desc "Heyweek CLI"
   homepage "https://heyweek.com"
-  version "1.0.8"
+  version "1.0.9"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.0.8/Heyweek_1.0.8_macOS_amd64.zip", using: CurlDownloadStrategy
-      sha256 "238cafce9340d3bf740bc774be9bbe2b76b200a3a9e4db5bb44d40d722a953f8"
+      url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.0.9/Heyweek_v1.0.9_macOS_amd64.zip", using: CurlDownloadStrategy
+      sha256 "fd3e98dc513cd22b32a3f2c77df3214e750313321c31713d5843140604be8573"
 
       def install
         bin.install "bin/hw"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.0.8/Heyweek_1.0.8_macOS_arm64.zip", using: CurlDownloadStrategy
-      sha256 "25f2014d68cd5db7c2b90ebc8f247f1fd8b9c9f3143c4cf4461855bab21aa77d"
+      url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.0.9/Heyweek_v1.0.9_macOS_arm64.zip", using: CurlDownloadStrategy
+      sha256 "9abce5a1ec9053f5dba925dc36ceb41d15897be654453eddd7190ae00f526203"
 
       def install
         bin.install "bin/hw"
@@ -29,8 +29,8 @@ class HeyweekCli < Formula
   on_linux do
     if Hardware::CPU.intel?
       if Hardware::CPU.is_64_bit?
-        url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.0.8/Heyweek_1.0.8_linux_x86_64.tar.gz", using: CurlDownloadStrategy
-        sha256 "1c1e295135ca7070c784d39f53904ff3a03213c11b96536e25cdb4545e3e63ba"
+        url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.0.9/Heyweek_v1.0.9_linux_x86_64.tar.gz", using: CurlDownloadStrategy
+        sha256 "c81b9be553f2b7593e31408465eaf617e5ad352da166d20dd22c36e6ca2ff840"
 
         def install
           bin.install "bin/hw"
@@ -39,8 +39,8 @@ class HeyweekCli < Formula
     end
     if Hardware::CPU.arm?
       if !Hardware::CPU.is_64_bit?
-        url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.0.8/Heyweek_1.0.8_linux_armv6.tar.gz", using: CurlDownloadStrategy
-        sha256 "2ea715e56bf5b6e565a7eea4fe2d54b99e8e2f3f25defa3a8367ccb539930484"
+        url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.0.9/Heyweek_v1.0.9_linux_armv6.tar.gz", using: CurlDownloadStrategy
+        sha256 "05da327a6004ddaabe4034c78671edf605bbce65cfddd3b0c4ac5bdaa460bcf5"
 
         def install
           bin.install "bin/hw"
@@ -49,8 +49,8 @@ class HeyweekCli < Formula
     end
     if Hardware::CPU.arm?
       if Hardware::CPU.is_64_bit?
-        url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.0.8/Heyweek_1.0.8_linux_arm64.tar.gz", using: CurlDownloadStrategy
-        sha256 "39071bd63981211dd0a67bf484bc32ee504aa7492265b8eed26a5ad9a0314364"
+        url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.0.9/Heyweek_v1.0.9_linux_arm64.tar.gz", using: CurlDownloadStrategy
+        sha256 "43584931cc8f096d3d0cb752f0d9dbbacf50b0a7633a3d4ee58f53b4e8450a65"
 
         def install
           bin.install "bin/hw"
