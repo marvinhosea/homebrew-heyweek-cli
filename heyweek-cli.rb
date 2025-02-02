@@ -5,49 +5,23 @@
 class HeyweekCli < Formula
   desc "Heyweek CLI"
   homepage "https://heyweek.com"
-  version "1.1.15"
+  version "1.1.16"
   depends_on :macos
 
   if Hardware::CPU.intel?
-    url "https://github.com/marvinhosea/homebrew-heyweek-cli/releases/download/v1.1.15/Heyweek_v1.1.15_macOS_amd64.zip", using: CurlDownloadStrategy
-    sha256 "b6c34558389c0c1b7e8b313d780f5564164aebd8ea35e64b1f1ce7596168686d"
+    url "https://github.com/marvinhosea/homebrew-heyweek-cli/releases/download/v1.1.16/Heyweek_v1.1.16_macOS_amd64.zip", using: CurlDownloadStrategy
+    sha256 "070fe52419f4fc8956a8c9c166519d8e5c2a8882fd33270a408e7563b3b71dd1"
 
     def install
-      bin.install "hw"
-      rm Dir["#{bin}/{hw-completion.bash,hw-completion.zsh}"]
-      system bin/"hw", "completion", "--shell", "bash"
-      system bin/"hw", "completion", "--shell", "zsh"
-      bash_completion.install "hw-completion.bash"
-      zsh_completion.install "hw-completion.zsh"
-      (zsh_completion/"_hw").write <<~EOS
-        #compdef hw
-        _hw () {
-          local e
-          e=$(dirname ${funcsourcetrace[1]%:*})/hw-completion.zsh
-          if [[ -f $e ]]; then source $e; fi
-        }
-      EOS
+      bin.install "bin/hw"
     end
   end
   if Hardware::CPU.arm?
-    url "https://github.com/marvinhosea/homebrew-heyweek-cli/releases/download/v1.1.15/Heyweek_v1.1.15_macOS_arm64.zip", using: CurlDownloadStrategy
-    sha256 "fa15c21ced7399a145e6af324511e1c5251172defe1ac45509f9155b17820814"
+    url "https://github.com/marvinhosea/homebrew-heyweek-cli/releases/download/v1.1.16/Heyweek_v1.1.16_macOS_arm64.zip", using: CurlDownloadStrategy
+    sha256 "57a75a912ee857e1921cff56c05691a4becdfa98d1f80d2791cb60970c3e7b07"
 
     def install
       bin.install "hw"
-      rm Dir["#{bin}/{hw-completion.bash,hw-completion.zsh}"]
-      system bin/"hw", "completion", "--shell", "bash"
-      system bin/"hw", "completion", "--shell", "zsh"
-      bash_completion.install "hw-completion.bash"
-      zsh_completion.install "hw-completion.zsh"
-      (zsh_completion/"_hw").write <<~EOS
-        #compdef hw
-        _hw () {
-          local e
-          e=$(dirname ${funcsourcetrace[1]%:*})/hw-completion.zsh
-          if [[ -f $e ]]; then source $e; fi
-        }
-      EOS
     end
   end
 
