@@ -18,8 +18,8 @@ removePrevInstallation() {
   fi
 }
 
-version=$(curl --silent "https://api.github.com/repos/marvinhosea/heyweek-cli/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-releasesApiUrl=https://github.com/marvinhosea/heyweek-cli/releases/download
+version=$(curl --silent "https://api.github.com/repos/marvinhosea/homebrew-heyweek-cli/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+releasesApiUrl=https://github.com/marvinhosea/homebrew-heyweek-cli/releases/download
 
 installationProcess() {
   echo "Installing Heyweek CLI"
