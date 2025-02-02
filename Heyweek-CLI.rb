@@ -5,57 +5,55 @@
 class HeyweekCli < Formula
   desc "Heyweek CLI"
   homepage "https://heyweek.com"
-  version "1.1.1"
+  version "1.1.11"
+  depends_on :macos
 
-  on_macos do
-    if Hardware::CPU.intel?
-      url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.1.1/Heyweek_v1.1.1_macOS_amd64.zip", using: CurlDownloadStrategy
-      sha256 "b80b26af6d43ed44e694e5ca88ae4d2e127f0b3f772c3d0dede690c5767f26c6"
+  if Hardware::CPU.intel?
+    url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.1.11/Heyweek_v1.1.11_macOS_amd64.zip", using: CurlDownloadStrategy
+    sha256 "f305fb47b5070e71ab308ac011345d92538449f5a9e258aa80326b3397932c0f"
 
-      def install
-        bin.install "bin/hw"
-      end
+    def install
+      bin.install "hw"
+      rm Dir["#{bin}/{hw-completion.bash,hw-completion.zsh}"]
+      system bin/"hw", "completion", "--shell", "bash"
+      system bin/"hw", "completion", "--shell", "zsh"
+      bash_completion.install "hw-completion.bash"
+      zsh_completion.install "hw-completion.zsh"
+      (zsh_completion/"_hw").write <<~EOS
+        #compdef hw
+        _hw () {
+          local e
+          e=$(dirname ${funcsourcetrace[1]%:*})/hw-completion.zsh
+          if [[ -f $e ]]; then source $e; fi
+        }
+      EOS
     end
-    if Hardware::CPU.arm?
-      url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.1.1/Heyweek_v1.1.1_macOS_arm64.zip", using: CurlDownloadStrategy
-      sha256 "3aa973a6dc2c3db8886518fb4c09c3fda2facd5872ab02f4ffbafbfee4e5964c"
+  end
+  if Hardware::CPU.arm?
+    url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.1.11/Heyweek_v1.1.11_macOS_arm64.zip", using: CurlDownloadStrategy
+    sha256 "1351b01c7fb1862d97e568375844b4f9a96ea356b147d22358934953a9afcda7"
 
-      def install
-        bin.install "bin/hw"
-      end
+    def install
+      bin.install "hw"
+      rm Dir["#{bin}/{hw-completion.bash,hw-completion.zsh}"]
+      system bin/"hw", "completion", "--shell", "bash"
+      system bin/"hw", "completion", "--shell", "zsh"
+      bash_completion.install "hw-completion.bash"
+      zsh_completion.install "hw-completion.zsh"
+      (zsh_completion/"_hw").write <<~EOS
+        #compdef hw
+        _hw () {
+          local e
+          e=$(dirname ${funcsourcetrace[1]%:*})/hw-completion.zsh
+          if [[ -f $e ]]; then source $e; fi
+        }
+      EOS
     end
   end
 
-  on_linux do
-    if Hardware::CPU.intel?
-      if Hardware::CPU.is_64_bit?
-        url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.1.1/Heyweek_v1.1.1_linux_x86_64.tar.gz", using: CurlDownloadStrategy
-        sha256 "bf79411e617ab90bdc76b2e562185b743da116ddfa27b3c6130be34ec68dd7be"
-
-        def install
-          bin.install "bin/hw"
-        end
-      end
-    end
-    if Hardware::CPU.arm?
-      if !Hardware::CPU.is_64_bit?
-        url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.1.1/Heyweek_v1.1.1_linux_armv6.tar.gz", using: CurlDownloadStrategy
-        sha256 "5ca5436eb23038d7271883e59d5d14996ed515538c1bd5defb0205ad4fc59f30"
-
-        def install
-          bin.install "bin/hw"
-        end
-      end
-    end
-    if Hardware::CPU.arm?
-      if Hardware::CPU.is_64_bit?
-        url "https://github.com/marvinhosea/heyweek-cli/releases/download/v1.1.1/Heyweek_v1.1.1_linux_arm64.tar.gz", using: CurlDownloadStrategy
-        sha256 "8b151db63791ccec6af28e7eabb04ef95e3e454efdbf438d7b8a6774c6ba0d33"
-
-        def install
-          bin.install "bin/hw"
-        end
-      end
-    end
+  def caveats
+    <<~EOS
+      ❤ Thanks for installing the Heyweek CLI! To get started run `hw auth login` first.
+    EOS
   end
 end
