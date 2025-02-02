@@ -37,7 +37,7 @@ installationProcess() {
     wget $heyweekURL
     sudo chmod 755 $heyweekName.tar.gz
     tar -xzf $heyweekName.tar.gz
-    sudo mv $heyweekName/bin/hw $heyweekPath
+    sudo mv $heyweekName/hw $heyweekPath
 
     rm -rf $heyweekName
   elif [ "$UNAME" == "Darwin" ]; then
@@ -48,11 +48,12 @@ installationProcess() {
     fi
 
     heyweekURL=$releasesApiUrl/$version/$heyweekName.zip
+
     wget $heyweekURL
     sudo chmod 755 $heyweekName.zip
     unzip $heyweekName.zip
     rm $heyweekName.zip
-    sudo mv $heyweekName/bin/hw $heyweekPath
+    sudo mv $heyweekName/hw $heyweekPath
 
     rm -rf $heyweekName
   fi
